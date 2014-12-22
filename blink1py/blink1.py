@@ -66,8 +66,8 @@ class Blink1(object):
     def set_rgb(self, r=0, g=0, b=0):
         self.fade_rgb(r, g, b)
 
-    def fade_rgb(self, r=0, g=0, b=0, time=0):
+    def fade_rgb(self, r=0, g=0, b=0, time=0,n=0):
         if not time:
             b1raw.set_rgb(self._device, r, g, b)
         else:
-            b1raw.fade_to_rgb(self._device, time, r, g, b)
+            b1raw.fade_to_rgb(self._device, time, r, g, b,n)

@@ -1,14 +1,9 @@
 from ctypes import (c_int, CDLL, c_char_p, c_wchar_p, c_void_p,
         c_ushort, c_ubyte, byref)
-from ctypes.util import find_library
 class Blink1LibraryError(Exception):
     pass
 
-libname = find_library("blink1")
-if not libname:
-    raise Blink1LibraryError('blink(1) library not found')
-
-libblink1 = CDLL(libname)
+libblink1 = CDLL("~/Downloads/blink1-master/commandline/libBlink1.dylib")
 
 blink1_open = libblink1.blink1_open
 blink1_open.restype = c_void_p
@@ -37,15 +32,16 @@ openById.argtypes = [c_int]
 def open_by_id(id):
     return openById(id)
 
-fadeToRGB = libblink1.blink1_fadeToRGB
+fadeToRGB = libblink1.blink1_fadeToRGBN
 fadeToRGB.argtypes = [c_void_p, c_ushort, c_ubyte, c_ubyte, c_ubyte]
 
-def fade_to_rgb(device, time, r, g, b):
+def fade_to_rgb(device, time, r, g, b,n):
     time = c_ushort(time)
     r = c_ubyte(r)
     g = c_ubyte(g)
     b = c_ubyte(b)
-    return fadeToRGB(device, time, r, g, b)
+    n = c_ubyte(n)
+    return fadeToRGB(device, time, r, g, b, n)
 
 setRGB = libblink1.blink1_setRGB
 setRGB.argtypes = [c_void_p, c_ubyte, c_ubyte, c_ubyte]
